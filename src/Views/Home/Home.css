@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+:root {
+    --gris-opaco: #868686a2;
+    --gris: #343434;
+    --gris-oscuro: #2d2d2d;
+    --negro: #0c0b0b;
+    --blanco: #fff;
+    --dorado: #efb810;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    background-color: var(--negro);
+    color: var(--blanco);
+}
+
+
+p {
+    text-wrap: pretty;
+    font-size: 15px;
+}
+
+/*NAV*/
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+nav img {
+    width: 50px;
+}
+
+/*MAIN*/
+
+.main {
+    width: 100vw;
+    max-width: 500px;
+    min-height: 100vh;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/*SECTION*/
+
+section.container {
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid var(--dorado);
+    box-shadow: 0 0 15px var(--dorado);
+}
+
+/*formularios*/
+
+section.container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form label {
+    display: flex;
+    flex-direction: column;
+    font-size: smaller;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--gris);
+}
+
+form div.terminos label {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    font-size: medium;
+}
+
+form input,
+select {
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 0;
+    background-color: transparent;
+    color: var(--blanco);
+}
+option{
+    background-color: var(--gris);
+}
