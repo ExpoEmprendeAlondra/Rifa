@@ -196,7 +196,7 @@ const Form = () => {
                     />
                 </label>
             </div>
-
+{/*-------------------------------------------*/}
             <div>
                 <label>
                     Sucursal en la que compraste:
