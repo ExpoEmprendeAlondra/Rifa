@@ -69,28 +69,31 @@ const Form = () => {
         e.preventDefault();
         const id = uuidv4();
         const data = { ...formData, id };
-        fetch("https://backexp.vercel.app/db", {
+        console.log(data)
+        await fetch("https://backexp.vercel.app/db", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then((res) => {
-            console.log(res)
-            if (!res.error) {
-                alert(res.message + " Tu folio es: " + res.folio)
-                setFormData(prev => {
-                    return {
-                        ...prev,
-                        folio: '',
-                        sucursal: '',
-                        terminos: false,
-                    }
-                })
-            } else {
-                alert(res.message)
-            }
         })
+            .then(res => res.json())
+            .then((res) => {
+                console.log(res)
+                if (!res.error) {
+                    alert(res.message + " Tu folio es: " + res.folio)
+                    setFormData(prev => {
+                        return {
+                            ...prev,
+                            folio: '',
+                            sucursal: '',
+                            terminos: false,
+                        }
+                    })
+                } else {
+                    alert(res.message)
+                }
+            })
     };
 
     return (
@@ -197,7 +200,7 @@ const Form = () => {
             <div>
                 <label>
                     Sucursal en la que compraste:
-                    <select name="sucursal" id="">
+                    <select name="sucursal" id="" onChange={handleChange} value={formData.sucursal}>
                         <option value="">Selecciona una opción</option>
                         <option value="Aragon">Aragón</option>
                         <option value="Pena Pena">Peña</option>
@@ -231,15 +234,18 @@ const BuscarId = () => {
         setfolio(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-    fetch(`https://backexp.vercel.app/db?id_folio=${folio}`).then((res) => {
-            if (!res.error) {
-                alert(res.message + " Para el folio " + res.data.folio)
-            } else {
-                alert(res.message)
-            }
-        })
+        await fetch(`https://backexp.vercel.app/db?id_folio=${folio}`)
+            .then(res => res.json())
+            .then((res) => {
+                console.log(res)
+                if (!res.error) {
+                    alert(res.message + " Para el folio " + res.data[0].folio)
+                } else {
+                    alert(res.message)
+                }
+            })
     }
 
     return (
