@@ -70,6 +70,7 @@ const Form = () => {
         const id = uuidv4();
         const data = { ...formData, id };
         console.log(data)
+        console.log("fecthing")
         await fetch("https://backexp.vercel.app/db", {
             method: 'POST',
             headers: {
@@ -93,6 +94,8 @@ const Form = () => {
                 } else {
                     alert(res.message)
                 }
+            }).catch((err) => {
+                console.log(err)
             })
     };
 
@@ -196,7 +199,7 @@ const Form = () => {
                     />
                 </label>
             </div>
-{/*-------------------------------------------*/}
+            {/*-------------------------------------------*/}
             <div>
                 <label>
                     Sucursal en la que compraste:
