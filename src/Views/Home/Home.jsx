@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import "./Home.css"
 
 export function Home() {
     return (
         <main>
             <Nav />
-
             <Main />
         </main>
     )
@@ -35,7 +35,7 @@ function Main() {
             <Reveal>
                 <section className="container">
                     <div>
-                        <p>Hola, si quieres puedes usar el siguiente formulario para buscar el id de tu reservación en caso de que necesites mayor información</p>
+                        <p>Usa este formulario para buscar tu folio y revisar si ya esta registrado</p>
                     </div>
                     <BuscarId />
                 </section>
@@ -65,9 +65,32 @@ const Form = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        const id = uuidv4();
+        const data = { ...formData, id };
+        fetch("https://backexp.vercel.app/db", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((res) => {
+            console.log(res)
+            if (!res.error) {
+                alert(res.message + " Tu folio es: " + res.folio)
+                setFormData(prev => {
+                    return {
+                        ...prev,
+                        folio: '',
+                        sucursal: '',
+                        terminos: false,
+                    }
+                })
+            } else {
+                alert(res.message)
+            }
+        })
     };
 
     return (
@@ -177,7 +200,7 @@ const Form = () => {
                     <select name="sucursal" id="">
                         <option value="">Selecciona una opción</option>
                         <option value="Aragon">Aragón</option>
-                        <option value="Pena">Peña</option>
+                        <option value="Pena Pena">Peña</option>
                         <option value="Izazaga">Izazaga</option>
                     </select>
                 </label>
@@ -209,8 +232,14 @@ const BuscarId = () => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log({ folio })
+        e.preventDefault();
+    fetch(`https://backexp.vercel.app/db?id_folio=${folio}`).then((res) => {
+            if (!res.error) {
+                alert(res.message + " Para el folio " + res.data.folio)
+            } else {
+                alert(res.message)
+            }
+        })
     }
 
     return (
